@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+
+    <script>
+var url = 'http://localhost:8080/Consumophp/new.php';
+
+
+ExtraerDatos=()=>{
+    var formData = new FormData();
+formData.append('nrodni', document.getElementById('DNI').value);
+
+fetch(url, { method: 'POST', body: formData })
+.then(function (response) {
+  return response.text();
+})
+.then(function (body) {
+  
+  $Obj=JSON.parse(body)
+  console.log($Obj)
+if($Obj['CodRespuesta']==="504")
+{
+    alert($Obj['mensaje']);
+}else {
+  document.getElementById('Nombre').value=$Obj['Nombre'][0]; 
+  document.getElementById('ApliidoP').value=$Obj['ApellidoPaterno'][0];
+  document.getElementById('ApliidoM').value=$Obj['ApellidoMaterno'][0];
+  document.getElementById('Cumple').value=$Obj['FechaNacimiento'][0];
+  document.getElementById('Direccion').value=$Obj['Direccion'][0];
+
+}
+
+  
+});
+}
+
+        
+       
+        
+        
+    </script>
+</head>
+<body>
+    
+    <label>DNI</label><input type="text" id="DNI" >
+    <button onclick="ExtraerDatos()"">Extraer</button>
+    <br>
+    <label>Nombres</label>
+    <input type="text" id="Nombre" readonly="readonly">  <br>
+    <label>Apellido Paterno</label>
+    <input type="text" id="ApliidoP" readonly="readonly"><br>
+    <label>Apellido Materno</label>
+    <input type="text" id="ApliidoM" readonly="readonly"><br>
+    <label>Cumpleaños</label>
+    <input type="text" id="Cumple"readonly="readonly"><br>
+    <label>Direccion</label>
+    <input type="text" id="Direccion" readonly="readonly"><br>
+</body>
+</html>
